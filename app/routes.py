@@ -10,10 +10,11 @@ def validate_book(book_id):
     try:
         book_id = int(book_id)
     except:
+        # abort raises an HTTPException for the given status code.
         abort(make_response({"message":f"book {book_id} invalid"}, 400))
 
     book = Book.query.get(book_id)
-
+    # When Model.query.get(primary_key) doesn't find a matching record, it returns None!
     if not book:
         abort(make_response({"message":f"book {book_id} not found"}, 404))
 
@@ -47,6 +48,7 @@ def read_all_books():
 @books_bp.route("/<book_id>", methods=["GET"])
 def read_one_book(book_id):
     book = validate_book(book_id)
+    # Flask will automatically convert a dictionary into an HTTP response body.
     return {
             "id": book.id,
             "title": book.title,
