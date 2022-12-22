@@ -32,9 +32,12 @@ def create_book():
 
 @books_bp.route("", methods=["GET"])
 def read_all_books():
-    
+    # args = parsed URL parameters (the part in the URL after the question mark)
+    # returns an immutable MultiDict (multiple values for the same key)
     title_query = request.args.get("title")
     if title_query:
+        # http://LOCALHOST:5000/books?title=title_query
+        # retrieve a book filtered by title=title_query, returns None if not found
         books = Book.query.filter_by(title=title_query)
     else:
         books = Book.query.all()
