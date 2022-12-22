@@ -69,7 +69,7 @@ def update_book(book_id):
 @books_bp.route("/<book_id>", methods=["DELETE"])
 def delete_book(book_id):
     book = validate_book(book_id)
-
+    # deletes the book, if the book_id is valid, is queried and found in the database
     db.session.delete(book)
     db.session.commit()
 
