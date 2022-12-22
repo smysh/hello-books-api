@@ -56,14 +56,15 @@ def read_one_book(book_id):
 @books_bp.route("/<book_id>", methods=["PUT"])
 def update_book(book_id):
     book = validate_book(book_id)
-
+    # request.get_json() is used to parse the JSON body into a Python dictionary.
     request_body = request.get_json()
 
     book.title = request_body["title"]
     book.description = request_body["description"]
-
+    # Every time a SQLAlchemy model has been updated, and we want to commit the change to the database, 
+    # we'll execute db.session.commit().
     db.session.commit()
-
+    # Since we didn't supply a status code, Flask will default to 200 OK.
     return make_response(f"Book #{book.id} successfully updated")
 
 
